@@ -1,0 +1,23 @@
+.carousel .thumbs-wrapper {
+    margin: 10px 0;
+}
+
+.carousel .thumbs {
+    display: flex;
+}
+
+.carousel .thumb {
+    border: 2px solid transparent;
+    height: 50px; /* or 50px if you want smaller */
+    /* overflow: hidden; */
+    
+}
+
+.carousel .thumb img {
+    height: 100%;
+    object-fit: cover;
+}
+
+.carousel .thumb.selected {
+    border-color: #0ea5e9; /* sky-500 */
+}
