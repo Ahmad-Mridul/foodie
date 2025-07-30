@@ -4,6 +4,7 @@
 
 .carousel .thumbs {
     display: flex;
+    justify-content: center;
 }
 
 .carousel .thumb {

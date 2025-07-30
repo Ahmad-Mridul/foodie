@@ -21,13 +21,13 @@ const Nav = () => {
         </>
     );
     return (
-        <div className=" bg-base-100 shadow-sm flex justify-between items-center">
+        <div className=" bg-black shadow-sm flex justify-between items-center p-2">
             <div className="">
                 <div className="dropdown">
                     <div
                         tabIndex={0}
                         role="button"
-                        className="btn btn-ghost lg:hidden"
+                        className="btn btn-ghost lg:hidden text-white"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -52,10 +52,10 @@ const Nav = () => {
                         {links}
                     </ul>
                 </div>
-                <a className="btn btn-ghost text-xl">FOODIE</a>
+                <a className="btn btn-ghost text-xl text-white">FOODIE</a>
             </div>
-            <div className="flex">
-                <ul className="menu menu-horizontal px-1 hidden lg:flex">
+            <div className="flex justify-center items-center">
+                <ul className="menu menu-horizontal px-1 hidden lg:flex text-white">
                     {links}
                 </ul>
                 <a className="btn">Button</a>
