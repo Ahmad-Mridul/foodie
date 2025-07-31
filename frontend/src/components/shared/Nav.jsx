@@ -1,27 +1,28 @@
+import { FaCircleUser } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
 const Nav = () => {
     const links = (
         <>
             <li>
-                <Link to="/">HOME</Link>
+                <Link to="/" className="hover:bg-[#CD9003] font-cinzel font-bold">HOME</Link>
             </li>
             <li>
-                <Link to="/">CONTACT US</Link>
+                <Link to="/" className="hover:bg-[#CD9003] font-cinzel font-bold">CONTACT US</Link>
             </li>
             <li>
-                <Link to="/">DASHBOARD</Link>
+                <Link to="/" className="hover:bg-[#CD9003] font-cinzel font-bold">DASHBOARD</Link>
             </li>
             <li>
-                <Link to="/">OUR MENU</Link>
+                <Link to="/" className="hover:bg-[#CD9003] font-cinzel font-bold">OUR MENU</Link>
             </li>
             <li>
-                <Link to="/">OUR SHOP</Link>
+                <Link to="/" className="hover:bg-[#CD9003] font-cinzel font-bold">OUR SHOP</Link>
             </li>
         </>
     );
     return (
-        <div className=" bg-black shadow-sm flex justify-between items-center p-2">
+        <div className=" bg-black/50 absolute z-10 w-full shadow-sm flex justify-between items-center p-2">
             <div className="">
                 <div className="dropdown">
                     <div
@@ -52,13 +53,20 @@ const Nav = () => {
                         {links}
                     </ul>
                 </div>
-                <a className="btn btn-ghost text-xl text-white">FOODIE</a>
+                <a to="/" className="btn btn-outline hover:text-[#CD9003] text-xl text-white">FOODIE</a>
             </div>
             <div className="flex justify-center items-center">
                 <ul className="menu menu-horizontal px-1 hidden lg:flex text-white">
                     {links}
                 </ul>
-                <a className="btn">Button</a>
+                <div className="space-x-2">
+                    <a className="btn">
+                        <FaCircleUser />
+                    </a>
+                    <Link to='/' className="btn">SignOut</Link>
+                    <Link to='/login' className="btn">LogIn</Link>
+                    <Link to='/register' className="btn">Register</Link>
+                </div>
             </div>
         </div>
     );
