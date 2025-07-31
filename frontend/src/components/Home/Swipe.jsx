@@ -8,6 +8,7 @@ import img2 from "../../assets/home/slide2.jpg";
 import img3 from "../../assets/home/slide3.jpg";
 import img4 from "../../assets/home/slide4.jpg";
 import img5 from "../../assets/home/slide5.jpg";
+import SectionHeading from "../shared/SectionHeading";
 
 const Swipe = () => {
     const swipeContents = [
@@ -18,25 +19,31 @@ const Swipe = () => {
         { title: "salads", img: img5 },
     ];
     return (
-        <Swiper
-            slidesPerView={4}
-            spaceBetween={30}
-            centeredSlides={true}
-            pagination={{
-                clickable: true,
-            }}
-            modules={[Pagination]}
-            className="mySwiper w-3/4 mx-auto"
-        >
-            {swipeContents.map((content, idx) => (
-                <SwiperSlide key={idx} className="relative">
-                    <img src={content.img} alt="" />
-                    <h2 className="uppercase  absolute bottom-10 left-1/2 -translate-x-1/2 text-3xl font-bold text-white">
-                        {content.title}
-                    </h2>
-                </SwiperSlide>
-            ))}
-        </Swiper>
+        <div className="">
+            <SectionHeading
+                title="From 11:00am to 10:00pm"
+                heading="ORDER ONLINE"
+            />
+            <Swiper
+                slidesPerView={4}
+                spaceBetween={30}
+                centeredSlides={true}
+                pagination={{
+                    clickable: true,
+                }}
+                modules={[Pagination]}
+                className="mySwiper w-3/4 mx-auto"
+            >
+                {swipeContents.map((content, idx) => (
+                    <SwiperSlide key={idx} className="relative">
+                        <img src={content.img} alt="" />
+                        <h2 className="uppercase  absolute bottom-10 left-1/2 -translate-x-1/2 text-3xl font-bold text-white">
+                            {content.title}
+                        </h2>
+                    </SwiperSlide>
+                ))}
+            </Swiper>
+        </div>
     );
 };
 

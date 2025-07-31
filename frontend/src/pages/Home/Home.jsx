@@ -9,6 +9,7 @@ import MenuCard from "../../components/shared/MenuCard";
 import Contact from "../../components/Home/Contact";
 import ProductCard from "../../components/shared/ProductCard";
 import SingleBolg from "../../components/Home/SingleBolg";
+import Testimonials from "../../components/Home/Testimonials";
 
 const Home = () => {
     return (
@@ -18,10 +19,7 @@ const Home = () => {
                 <title>FOODIE | HOME</title>
             </Helmet>
             <HomeCarousel />
-            <SectionHeading
-                title="From 11:00am to 10:00pm"
-                heading="ORDER ONLINE"
-            />
+            
             <Swipe />
             <Cover
                 bg={coverImg}
@@ -34,6 +32,7 @@ const Home = () => {
             <SectionHeading title="Should Try" heading="CHEF RECOMMENDS" />
             <ProductCard />
             <SingleBolg/>
+            <Testimonials/>
         </div>
     );
 };
