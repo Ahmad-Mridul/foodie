@@ -7,11 +7,11 @@ const ProductCard = () => {
     return (
         <div className="w-3/4 mx-auto grid grid-cols-3 gap-10">
             {items.map((item, idx) => (
-                <div className="card bg-base-100  shadow-sm" key={idx}>
+                <div className="card bg-[#F3F3F3]  shadow-sm" key={idx}>
                     <figure>
                         <img src={item.image} alt="Shoes" />
                     </figure>
-                    <div className="card-body items-center text-center">
+                    <div className="card-body items-center text-center ">
                         <h2 className="card-title">{item.name}</h2>
                         <p>{item.recipe}</p>
                         <div className="card-actions justify-center">
