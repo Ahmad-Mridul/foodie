@@ -5,6 +5,7 @@
         "recipe": "Chargrilled fresh tuna steak (served medium rare) on classic Niçoise salad with French beans.",
         "image": "https://cristianonew.ukrdevs.com/wp-content/uploads/2016/08/product-1-370x247.jpg",
         "category": "salad",
+        "recommended":true,
         "price": 14.7
     },
     {
@@ -61,6 +62,7 @@
         "recipe": "Chargrilled chicken with avocado, baby gem lettuce, baby spinach, shallots, French beans, walnuts, croutons and a mustard dressing",
         "image": "https://cristianonew.ukrdevs.com/wp-content/uploads/2016/08/product-8-370x247.jpg",
         "category": "pizza",
+        "recommended":true,
         "price": 12.9
     },
     {
@@ -133,6 +135,7 @@
         "recipe": "Sautéed breaded veal escalope with watercress, lemon and veal jus.",
         "image": "https://cristianonew.ukrdevs.com/wp-content/uploads/2016/08/product-8-370x247.jpg",
         "category": "salad",
+        "recommended":true,
         "price": 9.5
     },
     {

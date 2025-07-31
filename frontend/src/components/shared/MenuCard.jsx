@@ -1,13 +1,7 @@
-import { useEffect, useState } from "react";
-import menus from "../../data/menu.json";
-const MenuCard = ({ category, btn }) => {
-    const [items, setItems] = useState([]);
+import useMenus from "../../hooks/useMenus";
 
-    useEffect(() => {
-        const filteredItem = menus.filter((menu) => menu.category == category);
-        setItems(filteredItem);
-    }, [category]);
-
+const MenuCard = ({ btn }) => {
+    const items = useMenus({ category : "popular" })
     return (
         <div className="w-3/4 mx-auto space-y-10">
             <div className="grid grid-cols-2  gap-10">
