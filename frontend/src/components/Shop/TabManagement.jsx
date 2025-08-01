@@ -3,7 +3,7 @@ import ProductCard from "../shared/ProductCard";
 
 const TabManagement = () => {
     const [value, setValue] = useState(null);
-
+    
     return (
         <div className="space-y-10 mx-auto text-center">
             <div className="space-x-5">
@@ -27,7 +27,7 @@ const TabManagement = () => {
                 </button>
                 <button
                     className="btn btn-primary uppercase"
-                    onClick={() => setValue("drink")}
+                    onClick={() => setValue("drinks")}
                 >
                     drinks
                 </button>

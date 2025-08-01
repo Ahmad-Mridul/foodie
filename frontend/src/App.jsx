@@ -6,6 +6,7 @@ import Login from './pages/Login/Login';
 import SignUp from './pages/SignUp/SignUp';
 import Menu from "./pages/Menu/Menu";
 import Shop from "./pages/Shop/Shop";
+import Contact from "./pages/Contact/Contact";
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                 <Route path="/register" element={<SignUp />} />
                 <Route path="/menu" element={<Menu />} />
                 <Route path="/shop" element={<Shop />} />
+                <Route path="/contact" element={<Contact />} />
             </Routes>
             <Footer />
         </div>

@@ -8,7 +8,7 @@ const Nav = () => {
                 <Link to="/" className="hover:bg-[#CD9003] font-cinzel font-bold">HOME</Link>
             </li>
             <li>
-                <Link to="/" className="hover:bg-[#CD9003] font-cinzel font-bold">CONTACT US</Link>
+                <Link to="/contact" className="hover:bg-[#CD9003] font-cinzel font-bold">CONTACT US</Link>
             </li>
             <li>
                 <Link to="/" className="hover:bg-[#CD9003] font-cinzel font-bold">DASHBOARD</Link>

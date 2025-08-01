@@ -6,9 +6,14 @@ import saladsBg from "../../assets/menu/salad-bg.jpg";
 import soupsBg from "../../assets/menu/soup-bg.jpg";
 import MenuCard from "../../components/shared/MenuCard";
 import SectionHeading from "../../components/shared/SectionHeading";
+import { Helmet } from "react-helmet";
 const Menu = () => {
     return (
         <div className="space-y-20">
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>FOODIE | DELICIOUS MENU</title>
+            </Helmet>
             <Cover
                 bg={coverImg}
                 title="OUR MENU"

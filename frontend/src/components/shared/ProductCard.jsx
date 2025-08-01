@@ -13,7 +13,7 @@ const ProductCard = ({category=null,recommended=false}) => {
                         <h2 className="card-title">{item.name}</h2>
                         <p>{item.recipe}</p>
                         <div className="card-actions justify-center">
-                            <button className="btn border-0 hover:bg-[#1F2937] hover:border-0 uppercase border-b-2 border-[#BB8506] text-[#BB8506] rounded-xl">
+                            <button className="btn border-0 bg-gray-200 hover:bg-[#1F2937] hover:border-0 uppercase border-b-2 border-[#BB8506] text-[#BB8506] rounded-xl">
                                 add to cart
                             </button>
                         </div>
