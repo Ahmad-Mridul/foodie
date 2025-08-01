@@ -1,7 +1,7 @@
 import useMenus from "../../hooks/useMenus";
 
-const ProductCard = ({recommended}) => {
-    const items = useMenus({ recommended: recommended });
+const ProductCard = ({category=null,recommended=false}) => {
+    const items = useMenus({category:category, recommended: recommended });
     return (
         <div className="w-3/4 mx-auto grid grid-cols-3 gap-10">
             {items.map((item, idx) => (

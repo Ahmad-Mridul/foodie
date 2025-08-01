@@ -14,10 +14,10 @@ const Nav = () => {
                 <Link to="/" className="hover:bg-[#CD9003] font-cinzel font-bold">DASHBOARD</Link>
             </li>
             <li>
-                <Link to="/our-menu" className="hover:bg-[#CD9003] font-cinzel font-bold">OUR MENU</Link>
+                <Link to="/menu" className="hover:bg-[#CD9003] font-cinzel font-bold">OUR MENU</Link>
             </li>
             <li>
-                <Link to="/" className="hover:bg-[#CD9003] font-cinzel font-bold">OUR SHOP</Link>
+                <Link to="/shop" className="hover:bg-[#CD9003] font-cinzel font-bold">OUR SHOP</Link>
             </li>
         </>
     );
