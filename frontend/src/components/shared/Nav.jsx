@@ -53,7 +53,7 @@ const Nav = () => {
                         {links}
                     </ul>
                 </div>
-                <a to="/" className="btn btn-outline hover:text-[#CD9003] text-xl text-white">FOODIE</a>
+                <Link to="/" className="btn btn-outline hover:text-[#CD9003] text-xl text-white">FOODIE</Link>
             </div>
             <div className="flex justify-center items-center">
                 <ul className="menu menu-horizontal px-1 hidden lg:flex text-white">
