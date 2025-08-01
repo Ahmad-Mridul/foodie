@@ -1,26 +1,29 @@
 import useMenus from "../../hooks/useMenus";
 
-const MenuCard = ({ btn }) => {
-    const items = useMenus({ category : "popular" })
+const MenuCard = ({ btn, category, limit }) => {
+    const items = useMenus({ category });
+
+    const displayItems = limit ? items.slice(0, limit) : items;
+
     return (
         <div className="w-3/4 mx-auto space-y-10">
-            <div className="grid grid-cols-2  gap-10">
-                {items.map((item, idx) => (
+            <div className="grid grid-cols-2 gap-10">
+                {displayItems.map((item, idx) => (
                     <div className="flex gap-3" key={idx}>
-                        <div className="">
+                        <div>
                             <img
                                 src={item.image}
                                 alt=""
                                 className="rounded-r-[50%] rounded-b-[50%]"
                             />
                         </div>
-                        <div className="">
+                        <div>
                             <h2 className="font-cinzel">
                                 {item.name}------------
                             </h2>
                             <p className="text-[#737373]">{item.recipe}</p>
                         </div>
-                        <div className="">
+                        <div>
                             <p className="text-[#BB8506]">${item.price}</p>
                         </div>
                     </div>

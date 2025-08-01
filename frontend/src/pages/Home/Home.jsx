@@ -27,10 +27,10 @@ const Home = () => {
                 desc="At Foodie, we believe great food brings people together. Our menu blends fresh ingredients with bold flavors to create dishes that are both comforting and exciting. Whether you’re stopping by for a quick bite or a full meal, you’ll always find something made with care and served with a smile."
             />
             <SectionHeading title="Check it out" heading="FROM OUR MENU" />
-            <MenuCard btn="View Full  Menu" />
+            <MenuCard btn="View Full  Menu" category="popular" limit={6}/>
             <Contact />
             <SectionHeading title="Should Try" heading="CHEF RECOMMENDS" />
-            <ProductCard />
+            <ProductCard recommended={true} />
             <SingleBolg/>
             <Testimonials/>
         </div>
