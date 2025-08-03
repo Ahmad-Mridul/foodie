@@ -27,7 +27,7 @@ async function run() {
         const menuCollection = client.db("foodieDB").collection("menus");
 
         app.get("/menus", async (req, res) => {
-            const result = menuCollection.find().toArray();
+            const result = await menuCollection.find().toArray();
             res.send(result);
         });
 
