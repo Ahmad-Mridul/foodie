@@ -20,7 +20,7 @@ const client = new MongoClient(uri, {
 
 async function run() {
     try {
-        await client.connect();
+        // await client.connect();
         const menuCollection = client.db("foodieDB").collection("menus");
 
         // No "/api" here, Vercel adds it automatically
