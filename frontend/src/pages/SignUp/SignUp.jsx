@@ -1,11 +1,12 @@
-import { FaFacebook, FaGithub } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 import bg from "../../assets/others/authentication.png";
 import login from "../../assets/others/authentication2.png";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../context/useAuth";
 import { useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 const SignUp = () => {
+    const [captchaValue, setCaptchaValue] = useState(null);
     const { createUserWithGooglePopUp, setUser, createUserWithEmailPass } =
         useAuth();
     const [userInfo, setUserInfo] = useState({
@@ -18,16 +19,27 @@ const SignUp = () => {
         createUserWithGooglePopUp()
             .then((user) => {
                 alert("user created succesfully");
-                setUser(user);
+                setUser(user.user);
                 navigate("/");
             })
             .catch((err) => console.log(err.message));
     };
+    const handleCaptchaChange = (value) => {
+        console.log("Captcha value:", value);
+        setCaptchaValue(value);
+    };
     const handleSignUp = (e) => {
         e.preventDefault();
+        if (!captchaValue) {
+            alert("Please complete the reCAPTCHA");
+            return;
+        }
+
+        // Continue submitting the form
+        console.log("Form submitted with captcha:", captchaValue);
         createUserWithEmailPass(userInfo.email, userInfo.password)
             .then((user) => {
-                setUser(user);
+                setUser(user.user);
                 navigate("/");
             })
             .catch((err) => console.log(err.message));
@@ -101,6 +113,10 @@ const SignUp = () => {
                                     }
                                 />
                             </div>
+                            <ReCAPTCHA
+                                sitekey="6LdOmJYrAAAAAK2IpM8YmPOqlJWo0U4m8B4IYjNp"
+                                onChange={handleCaptchaChange}
+                            />  
                             <div className="flex justify-center items-center flex-col space-y-2 ">
                                 <button
                                     onClick={handleSignUp}
@@ -115,19 +131,14 @@ const SignUp = () => {
                                         Login here
                                     </Link>
                                 </p>
-                                <p>or sign up with</p>
-                                <div className="flex gap-5">
-                                    <button className="btn">
-                                        <FaFacebook />
-                                    </button>
+                                <div className="divider">OR</div>
+                                <div className="flex gap-5 w-full">
                                     <button
-                                        className="btn"
                                         onClick={handleGoogleSignUp}
+                                        className="btn w-full"
                                     >
-                                        <FcGoogle />
-                                    </button>
-                                    <button className="btn">
-                                        <FaGithub />
+                                        <FcGoogle className="text-2xl" />
+                                        SignUp with Google
                                     </button>
                                 </div>
                             </div>

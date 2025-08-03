@@ -5,18 +5,41 @@ import login from "../../assets/others/authentication2.png";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../context/useAuth";
 import { useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 const Login = () => {
-    const {signInUserEmailPass} = useAuth();
+    const [captchaValue, setCaptchaValue] = useState(null);
+    const { signInUserEmailPass, createUserWithGooglePopUp, setUser } =
+        useAuth();
     const [userInfo, setUserInfo] = useState({
-        email:"",
-        password:""
+        email: "",
+        password: "",
     });
+    const handleCaptchaChange = (value) => {
+        console.log("Captcha value:", value);
+        setCaptchaValue(value);
+    };
     const navigate = useNavigate();
     const handleLogin = (e) => {
         e.preventDefault();
-        signInUserEmailPass(userInfo.email,userInfo.password);
-        navigate("/")
+        if (!captchaValue) {
+            alert("Please complete the reCAPTCHA");
+            return;
+        }
+
+        // Continue submitting the form
+        console.log("Form submitted with captcha:", captchaValue);
+        signInUserEmailPass(userInfo.email, userInfo.password);
+        navigate("/");
     };
+    const handleGoogleLogin = () => {
+        createUserWithGooglePopUp()
+            .then((user) => {
+                setUser(user.user);
+                navigate("/");
+            })
+            .catch((err) => console.log(err.message));
+    };
+
     return (
         <div
             className="flex justify-center items-center bg-cover bg-center p-10 h-screen"
@@ -42,7 +65,12 @@ const Login = () => {
                                     className="border w-full"
                                     required
                                     value={userInfo.email}
-                                    onChange={e=>setUserInfo({...userInfo,email:e.target.value})}
+                                    onChange={(e) =>
+                                        setUserInfo({
+                                            ...userInfo,
+                                            email: e.target.value,
+                                        })
+                                    }
                                 />
                             </div>
                             <div className="">
@@ -55,9 +83,18 @@ const Login = () => {
                                     className="border w-full"
                                     required
                                     value={userInfo.password}
-                                    onChange={e=>setUserInfo({...userInfo,password:e.target.value})}
+                                    onChange={(e) =>
+                                        setUserInfo({
+                                            ...userInfo,
+                                            password: e.target.value,
+                                        })
+                                    }
                                 />
                             </div>
+                            {/* <ReCAPTCHA
+                                sitekey="6LdOmJYrAAAAAK2IpM8YmPOqlJWo0U4m8B4IYjNp"
+                                onChange={handleCaptchaChange}
+                            /> */}
                             <div className="flex justify-center items-center flex-col space-y-2">
                                 <button
                                     onClick={handleLogin}
@@ -67,18 +104,19 @@ const Login = () => {
                                     Login
                                 </button>
                                 <p className="text-[#B58130]">
-                                    New here? <Link to="/register" className="link">Create a New Account</Link>
+                                    New here?{" "}
+                                    <Link to="/register" className="link">
+                                        Create a New Account
+                                    </Link>
                                 </p>
-                                <p>or sign in with</p>
-                                <div className="flex gap-5">
-                                    <button className="btn">
-                                        <FaFacebook />
-                                    </button>
-                                    <button className="btn">
-                                        <FcGoogle />
-                                    </button>
-                                    <button className="btn">
-                                        <FaGithub />
+                                <div className="divider">OR</div>
+                                <div className="flex gap-5 w-full">
+                                    <button
+                                        onClick={handleGoogleLogin}
+                                        className="btn w-full"
+                                    >
+                                        <FcGoogle className="text-2xl" />
+                                        Login with Google
                                     </button>
                                 </div>
                             </div>

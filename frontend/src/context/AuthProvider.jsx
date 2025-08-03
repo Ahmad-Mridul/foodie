@@ -7,12 +7,14 @@ import {
     signOut,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
+    FacebookAuthProvider,
 } from "firebase/auth";
 import auth from "../firebase/firebase.init";
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState([]);
     const [loading, setLoading] = useState(true);
     const provider = new GoogleAuthProvider();
+    const fbProvider = new FacebookAuthProvider();
     const createUserWithGooglePopUp = () => {
         setLoading(false);
         return signInWithPopup(auth, provider);
@@ -27,20 +29,23 @@ const AuthProvider = ({ children }) => {
         setLoading(false);
         return signInWithEmailAndPassword(auth, email, password);
     };
+    const signInWithFacebook = () => {
+        setLoading(false);
+        return signInWithPopup(auth, fbProvider);
+    };
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
-                console.log("User signed in:", user);
-                setUser(user);
+                setUser(user); // handles reloads
                 setLoading(false);
             } else {
-                console.log("No user signed in");
                 setUser(null);
+                setLoading(false);
             }
         });
-
         return () => unSubscribe();
     }, []);
+
     const authInfo = {
         user,
         setUser,
@@ -49,7 +54,8 @@ const AuthProvider = ({ children }) => {
         createUserWithGooglePopUp,
         userSignOut,
         createUserWithEmailPass,
-        signInUserEmailPass
+        signInUserEmailPass,
+        signInWithFacebook,
     };
 
     return (

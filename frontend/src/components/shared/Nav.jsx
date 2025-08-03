@@ -4,7 +4,7 @@ import useAuth from "../../context/useAuth";
 
 const Nav = () => {
     const { user, userSignOut } = useAuth();
-    
+
     const links = (
         <>
             <li>
@@ -95,13 +95,28 @@ const Nav = () => {
                 <div className="space-x-2">
                     {user ? (
                         <div className="space-x-2">
-                            <p className="text-white">{user?.displayName ? user?.displayName:user?.email}</p>
-                            <a className="btn">
-                                <FaCircleUser />
-                            </a>
-                            <button onClick={()=>userSignOut()} className="btn">
-                                SignOut
-                            </button>
+                            <details className="dropdown dropdown-end">
+                                <summary className="btn">
+                                    <FaCircleUser />
+                                </summary>
+                                <ul className="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                                    <li>
+                                        <p className="">
+                                            {user?.displayName
+                                                ? user?.displayName
+                                                : user?.email}
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <button
+                                            onClick={() => userSignOut()}
+                                            className="btn"
+                                        >
+                                            SignOut
+                                        </button>
+                                    </li>
+                                </ul>
+                            </details>
                         </div>
                     ) : (
                         <div className="space-x-2">

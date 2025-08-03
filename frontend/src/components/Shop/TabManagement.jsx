@@ -3,7 +3,6 @@ import ProductCard from "../shared/ProductCard";
 
 const TabManagement = () => {
     const [value, setValue] = useState(null);
-
     return (
         <div className="space-y-10 mx-auto text-center">
             <div className="space-x-5">
