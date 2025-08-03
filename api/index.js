@@ -1,6 +1,6 @@
 require("dotenv").config();
-const { MongoClient, ServerApiVersion } = require("mongodb");
 const express = require("express");
+const { MongoClient, ServerApiVersion } = require("mongodb");
 const app = express();
 const cors = require("cors");
 const port = process.env.PORT || 3000;
@@ -26,7 +26,7 @@ async function run() {
 
         const menuCollection = client.db("foodieDB").collection("menus");
 
-        app.get("/menus", async (req, res) => {
+        app.get("/api/menus", async (req, res) => {
             const result = await menuCollection.find().toArray();
             res.send(result);
         });
