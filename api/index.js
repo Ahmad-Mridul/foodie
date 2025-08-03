@@ -1,16 +1,15 @@
-require("dotenv").config();
 const express = require("express");
-const { MongoClient, ServerApiVersion } = require("mongodb");
-const app = express();
+const serverless = require("serverless-http");
 const cors = require("cors");
-const port = process.env.PORT || 3000;
+const { MongoClient, ServerApiVersion } = require("mongodb");
+require("dotenv").config();
 
+const app = express();
 app.use(cors());
 app.use(express.json());
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.me22h6h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
     serverApi: {
         version: ServerApiVersion.v1,
@@ -21,32 +20,27 @@ const client = new MongoClient(uri, {
 
 async function run() {
     try {
-        // Connect the client to the server	(optional starting in v4.7)
-        // await client.connect();
-
+        await client.connect();
         const menuCollection = client.db("foodieDB").collection("menus");
 
-        app.get("/api/menus", async (req, res) => {
+        // No "/api" here, Vercel adds it automatically
+        app.get("/menus", async (req, res) => {
             const result = await menuCollection.find().toArray();
-            res.send(result);
+            res.json(result);
         });
 
-        // Send a ping to confirm a successful connection
-        await client.db("admin").command({ ping: 1 });
-        console.log(
-            "Pinged your deployment. You successfully connected to MongoDB!"
-        );
-    } finally {
-        // Ensures that the client will close when you finish/error
-        // await client.close();
+        console.log("Connected to MongoDB");
+    } catch (error) {
+        console.error("MongoDB connection error:", error);
     }
 }
-run().catch(console.dir);
+run();
 
-app.get("/", async (req, res) => {
+// Root route (for testing)
+app.get("/", (req, res) => {
     res.send("Connected");
 });
 
-app.listen(port, () => {
-    console.log(`Listening from port: ${port}`);
-});
+// Export for Vercel
+module.exports = app;
+module.exports.handler = serverless(app);
