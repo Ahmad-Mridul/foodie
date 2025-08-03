@@ -12,6 +12,7 @@ import Shop from "./pages/Shop/Shop";
 import Contact from "./pages/Contact/Contact";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
+import AuthProvider from "./context/AuthProvider";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -45,5 +46,7 @@ const router = createBrowserRouter([
     },
 ]);
 createRoot(document.getElementById("root")).render(
-    <RouterProvider router={router}></RouterProvider>
+    <AuthProvider>
+        <RouterProvider router={router}></RouterProvider>
+    </AuthProvider>
 );

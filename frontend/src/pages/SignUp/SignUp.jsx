@@ -2,8 +2,36 @@ import { FaFacebook, FaGithub } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 import bg from "../../assets/others/authentication.png";
 import login from "../../assets/others/authentication2.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../../context/useAuth";
+import { useState } from "react";
 const SignUp = () => {
+    const { createUserWithGooglePopUp, setUser, createUserWithEmailPass } =
+        useAuth();
+    const [userInfo, setUserInfo] = useState({
+        name: "",
+        email: "",
+        password: "",
+    });
+    const navigate = useNavigate();
+    const handleGoogleSignUp = () => {
+        createUserWithGooglePopUp()
+            .then((user) => {
+                alert("user created succesfully");
+                setUser(user);
+                navigate("/");
+            })
+            .catch((err) => console.log(err.message));
+    };
+    const handleSignUp = (e) => {
+        e.preventDefault();
+        createUserWithEmailPass(userInfo.email, userInfo.password)
+            .then((user) => {
+                setUser(user);
+                navigate("/");
+            })
+            .catch((err) => console.log(err.message));
+    };
     return (
         <div
             className="flex justify-center items-center bg-cover bg-center p-10 "
@@ -28,6 +56,13 @@ const SignUp = () => {
                                     type="text"
                                     className="border w-full"
                                     required
+                                    value={userInfo.name}
+                                    onChange={(e) =>
+                                        setUserInfo({
+                                            ...userInfo,
+                                            name: e.target.value,
+                                        })
+                                    }
                                 />
                             </div>
                             <div className="">
@@ -39,6 +74,13 @@ const SignUp = () => {
                                     type="email"
                                     className="border w-full"
                                     required
+                                    value={userInfo.email}
+                                    onChange={(e) =>
+                                        setUserInfo({
+                                            ...userInfo,
+                                            email: e.target.value,
+                                        })
+                                    }
                                 />
                             </div>
                             <div className="">
@@ -50,10 +92,18 @@ const SignUp = () => {
                                     type="password"
                                     className="border w-full"
                                     required
+                                    value={userInfo.password}
+                                    onChange={(e) =>
+                                        setUserInfo({
+                                            ...userInfo,
+                                            password: e.target.value,
+                                        })
+                                    }
                                 />
                             </div>
                             <div className="flex justify-center items-center flex-col space-y-2 ">
                                 <button
+                                    onClick={handleSignUp}
                                     type="submit"
                                     className="btn px-10 bg-gradient-to-r from-[#835D23] to-[#B58130] hover:bg-transparent hover:border-orange-300 border transition duration-500 text-white w-full"
                                 >
@@ -70,7 +120,10 @@ const SignUp = () => {
                                     <button className="btn">
                                         <FaFacebook />
                                     </button>
-                                    <button className="btn">
+                                    <button
+                                        className="btn"
+                                        onClick={handleGoogleSignUp}
+                                    >
                                         <FcGoogle />
                                     </button>
                                     <button className="btn">

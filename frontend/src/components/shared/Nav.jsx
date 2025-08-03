@@ -1,23 +1,51 @@
 import { FaCircleUser } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import useAuth from "../../context/useAuth";
 
 const Nav = () => {
+    const { user, userSignOut } = useAuth();
+    
     const links = (
         <>
             <li>
-                <Link to="/" className="hover:bg-[#CD9003] font-cinzel font-bold">HOME</Link>
+                <Link
+                    to="/"
+                    className="hover:bg-[#CD9003] font-cinzel font-bold"
+                >
+                    HOME
+                </Link>
             </li>
             <li>
-                <Link to="/contact" className="hover:bg-[#CD9003] font-cinzel font-bold">CONTACT US</Link>
+                <Link
+                    to="/contact"
+                    className="hover:bg-[#CD9003] font-cinzel font-bold"
+                >
+                    CONTACT US
+                </Link>
             </li>
             <li>
-                <Link to="/" className="hover:bg-[#CD9003] font-cinzel font-bold">DASHBOARD</Link>
+                <Link
+                    to="/"
+                    className="hover:bg-[#CD9003] font-cinzel font-bold"
+                >
+                    DASHBOARD
+                </Link>
             </li>
             <li>
-                <Link to="/menu" className="hover:bg-[#CD9003] font-cinzel font-bold">OUR MENU</Link>
+                <Link
+                    to="/menu"
+                    className="hover:bg-[#CD9003] font-cinzel font-bold"
+                >
+                    OUR MENU
+                </Link>
             </li>
             <li>
-                <Link to="/shop" className="hover:bg-[#CD9003] font-cinzel font-bold">OUR SHOP</Link>
+                <Link
+                    to="/shop"
+                    className="hover:bg-[#CD9003] font-cinzel font-bold"
+                >
+                    OUR SHOP
+                </Link>
             </li>
         </>
     );
@@ -53,19 +81,38 @@ const Nav = () => {
                         {links}
                     </ul>
                 </div>
-                <Link to="/" className="btn btn-outline hover:text-[#CD9003] text-xl text-white">FOODIE</Link>
+                <Link
+                    to="/"
+                    className="btn btn-outline hover:text-[#CD9003] text-xl text-white"
+                >
+                    FOODIE
+                </Link>
             </div>
             <div className="flex justify-center items-center">
                 <ul className="menu menu-horizontal px-1 hidden lg:flex text-white">
                     {links}
                 </ul>
                 <div className="space-x-2">
-                    <a className="btn">
-                        <FaCircleUser />
-                    </a>
-                    <Link to='/' className="btn">SignOut</Link>
-                    <Link to='/login' className="btn">LogIn</Link>
-                    <Link to='/register' className="btn">Register</Link>
+                    {user ? (
+                        <div className="space-x-2">
+                            <p className="text-white">{user?.displayName ? user?.displayName:user?.email}</p>
+                            <a className="btn">
+                                <FaCircleUser />
+                            </a>
+                            <button onClick={()=>userSignOut()} className="btn">
+                                SignOut
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="space-x-2">
+                            <Link to="/login" className="btn">
+                                LogIn
+                            </Link>
+                            <Link to="/register" className="btn">
+                                Register
+                            </Link>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
