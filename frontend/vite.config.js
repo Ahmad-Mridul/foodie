@@ -6,5 +6,8 @@ export default defineConfig({
     plugins: [react(), tailwindcss()],
     server: {
         historyApiFallback: true,
-    },  
+    },
+    build: {
+        chunkSizeWarningLimit: 1000, // increases limit to 1000 KB
+    },
 });
