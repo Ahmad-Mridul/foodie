@@ -2,9 +2,10 @@ import { FaCircleUser } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import useAuth from "../../context/useAuth";
 import { BsBagPlus } from "react-icons/bs";
+import useCart from "../../hooks/useCart";
 const Nav = () => {
     const { user, userSignOut } = useAuth();
-
+    const [cart] = useCart();
     const links = (
         <>
             <li>
@@ -98,7 +99,7 @@ const Nav = () => {
                             <button className="btn">
                                 <BsBagPlus />{" "}
                                 <div className="badge badge-sm badge-secondary">
-                                    0
+                                    {cart.length}
                                 </div>
                             </button>
                             <details className="dropdown dropdown-end">

@@ -3,13 +3,15 @@ import useAuth from "../../context/useAuth";
 import useMenus from "../../hooks/useMenus";
 import Swal from "sweetalert2";
 import axios from "axios";
+import useCart from "../../hooks/useCart";
 const ProductCard = ({ category = null, recommended = false }) => {
     const items = useMenus({ category: category, recommended: recommended });
     const { user } = useAuth();
+    const [, refetch] = useCart();
     const navigate = useNavigate();
     const location = useLocation();
     const handleAddtoCart = (item) => {
-        if (user && user.email) {
+        if (user && user?.email) {
             const cartItem = {
                 menuId: item._id,
                 email: user.email,
@@ -18,7 +20,6 @@ const ProductCard = ({ category = null, recommended = false }) => {
                 price: item.price,
             };
             axios.post("http://localhost:3000/carts", cartItem).then((res) => {
-                console.log(res.data);
                 if (res.data.insertedId) {
                     Swal.fire({
                         position: "top-end",
@@ -27,6 +28,7 @@ const ProductCard = ({ category = null, recommended = false }) => {
                         showConfirmButton: false,
                         timer: 1500,
                     });
+                    refetch();
                 }
             });
         } else {
