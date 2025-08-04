@@ -1,7 +1,50 @@
+import { useLocation, useNavigate } from "react-router-dom";
+import useAuth from "../../context/useAuth";
 import useMenus from "../../hooks/useMenus";
-
-const ProductCard = ({category=null,recommended=false}) => {
-    const items = useMenus({category:category, recommended: recommended });
+import Swal from "sweetalert2";
+import axios from "axios";
+const ProductCard = ({ category = null, recommended = false }) => {
+    const items = useMenus({ category: category, recommended: recommended });
+    const { user } = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const handleAddtoCart = (item) => {
+        if (user && user.email) {
+            const cartItem = {
+                menuId: item._id,
+                email: user.email,
+                name: item.name,
+                image: item.image,
+                price: item.price,
+            };
+            axios.post("http://localhost:3000/carts", cartItem).then((res) => {
+                console.log(res.data);
+                if (res.data.insertedId) {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "item has been added to the cart",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                }
+            });
+        } else {
+            Swal.fire({
+                title: "Want add to cart?",
+                text: "Please log in",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Login",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate("/login", { state: { from: location } });
+                }
+            });
+        }
+    };
     return (
         <div className="w-3/4 mx-auto grid grid-cols-3 gap-10">
             {items.map((item, idx) => (
@@ -13,7 +56,10 @@ const ProductCard = ({category=null,recommended=false}) => {
                         <h2 className="card-title">{item.name}</h2>
                         <p>{item.recipe}</p>
                         <div className="card-actions justify-center">
-                            <button className="btn border-0 bg-gray-200 hover:bg-[#1F2937] hover:border-0 uppercase border-b-2 border-[#BB8506] text-[#BB8506] rounded-xl">
+                            <button
+                                onClick={() => handleAddtoCart(item)}
+                                className="btn border-0 bg-gray-200 hover:bg-[#1F2937] hover:border-0 uppercase border-b-2 border-[#BB8506] text-[#BB8506] rounded-xl"
+                            >
                                 add to cart
                             </button>
                         </div>

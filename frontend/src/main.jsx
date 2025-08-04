@@ -13,6 +13,7 @@ import Contact from "./pages/Contact/Contact";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
 import AuthProvider from "./context/AuthProvider";
+import PrivateRoute from "./routes/PrivateRoute";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -28,7 +29,11 @@ const router = createBrowserRouter([
             },
             {
                 path: "/shop",
-                element: <Shop />,
+                element: (
+                    <PrivateRoute>
+                        <Shop />
+                    </PrivateRoute>
+                ),
             },
             {
                 path: "/contact",

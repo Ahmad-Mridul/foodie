@@ -1,7 +1,7 @@
 import { FaCircleUser } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import useAuth from "../../context/useAuth";
-
+import { BsBagPlus } from "react-icons/bs";
 const Nav = () => {
     const { user, userSignOut } = useAuth();
 
@@ -89,17 +89,23 @@ const Nav = () => {
                 </Link>
             </div>
             <div className="flex justify-center items-center">
-                <ul className="menu menu-horizontal px-1 hidden lg:flex text-white">
+                <ul className="menu menu-horizontal px-1 hidden lg:flex text-white justify-center items-center">
                     {links}
                 </ul>
                 <div className="space-x-2">
                     {user ? (
                         <div className="space-x-2">
+                            <button className="btn">
+                                <BsBagPlus />{" "}
+                                <div className="badge badge-sm badge-secondary">
+                                    0
+                                </div>
+                            </button>
                             <details className="dropdown dropdown-end">
                                 <summary className="btn">
                                     <FaCircleUser />
                                 </summary>
-                                <ul className="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                                <ul className="menu mt-2 dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
                                     <li>
                                         <p className="">
                                             {user?.displayName

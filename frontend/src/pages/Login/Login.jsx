@@ -2,7 +2,7 @@ import { FaFacebook, FaGithub } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 import bg from "../../assets/others/authentication.png";
 import login from "../../assets/others/authentication2.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../context/useAuth";
 import { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -15,6 +15,8 @@ const Login = () => {
         email: "",
         password: "",
     });
+    const location = useLocation();
+    const from = location?.state?.from?.pathname || "/";
     // eslint-disable-next-line no-unused-vars
     const handleCaptchaChange = (value) => {
         console.log("Captcha value:", value);
@@ -31,20 +33,20 @@ const Login = () => {
         // Continue submitting the form
         console.log("Form submitted with captcha:", captchaValue);
         signInUserEmailPass(userInfo.email, userInfo.password);
-        navigate("/");
+        navigate(from, { replace: true });
     };
     const handleGoogleLogin = () => {
         createUserWithGooglePopUp()
             .then((user) => {
                 setUser(user.user);
-                navigate("/");
+                navigate(from, { replace: true });
             })
             .catch((err) => console.log(err.message));
     };
 
     return (
         <>
-            <HelmetTitlle title="Login to FOODIE"/>
+            <HelmetTitlle title="Login to FOODIE" />
             <div
                 className="flex justify-center items-center bg-cover bg-center p-10 h-screen"
                 style={{ backgroundImage: `url(${bg})` }}

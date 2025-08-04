@@ -7,12 +7,20 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import { FaQuoteLeft } from "react-icons/fa6";
 
-import testimonials from "../../data/reviews.json";
 import { Rating } from "@smastrom/react-rating";
 
 import "@smastrom/react-rating/style.css";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from 'axios';
 
 const Testimonials = () => {
+    const [reviews, setReviews] = useState([]);
+    useEffect(()=>{
+        axios.get("http://localhost:3000/reviews")
+        .then(res=>setReviews(res.data))
+        .catch(err=>console.log(err.message))
+    },[])
     return (
         <div className="w-3/4 mx-auto">
             <SectionHeading
@@ -25,7 +33,7 @@ const Testimonials = () => {
                     modules={[Navigation]}
                     className="mySwiper "
                 >
-                    {testimonials.map((testimonial) => (
+                    {reviews.map((testimonial) => (
                         <SwiperSlide key={testimonial._id}>
                             <div className="flex flex-col justify-center items-center m-24">
                                 <Rating
