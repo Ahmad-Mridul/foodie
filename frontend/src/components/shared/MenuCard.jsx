@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import useMenus from "../../hooks/useMenus";
 
 const MenuCard = ({ btn, category, limit }) => {
@@ -30,9 +31,9 @@ const MenuCard = ({ btn, category, limit }) => {
                 ))}
             </div>
             <div className="text-center">
-                <button className="btn border-0 uppercase border-b-2 border-gray-900 rounded-xl">
+                <Link to="/shop" className="btn border-0 uppercase border-b-2 border-gray-900 rounded-xl">
                     {btn}
-                </button>
+                </Link>
             </div>
         </div>
     );
