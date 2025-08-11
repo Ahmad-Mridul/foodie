@@ -3,6 +3,7 @@ import SectionHeading from "../../shared/SectionHeading";
 
 const Cart = () => {
     const [cart] = useCart();
+    const totalPrice = cart.reduce((total,item)=>total+item.price,0)
     return (
         <div>
             <SectionHeading title="My Cart" heading="WANNA ADD MORE?" />
@@ -11,11 +12,11 @@ const Cart = () => {
                     Total orders: {cart.length}
                 </h2>
                 <h2 className="text-2xl font-bold font-cinzel">
-                    total price: $88.2
+                    total price: ${totalPrice}
                 </h2>
                 <button className="btn btn-warning ">PAY</button>
             </div>
-            
+
         </div>
     );
 };
