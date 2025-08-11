@@ -89,12 +89,12 @@ const Nav = () => {
                 <div className="space-x-2">
                     {user ? (
                         <div className="space-x-2">
-                            <button className="btn">
+                            <Link to="/dashboard/cart" className="btn">
                                 <BsBagPlus />{" "}
                                 <div className="badge badge-sm badge-secondary">
                                     {cart.length}
                                 </div>
-                            </button>
+                            </Link>
                             <details className="dropdown dropdown-end">
                                 <summary className="btn">
                                     <FaCircleUser />
