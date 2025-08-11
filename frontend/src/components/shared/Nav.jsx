@@ -1,52 +1,45 @@
 import { FaCircleUser } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../context/useAuth";
 import { BsBagPlus } from "react-icons/bs";
 import useCart from "../../hooks/useCart";
+import "./nav.css"
 const Nav = () => {
     const { user, userSignOut } = useAuth();
     const [cart] = useCart();
     const links = (
         <>
             <li>
-                <Link
+                <NavLink
                     to="/"
                     className="hover:bg-[#CD9003] font-cinzel font-bold"
                 >
                     HOME
-                </Link>
+                </NavLink>
             </li>
             <li>
-                <Link
+                <NavLink
                     to="/contact"
                     className="hover:bg-[#CD9003] font-cinzel font-bold"
                 >
                     CONTACT US
-                </Link>
+                </NavLink>
             </li>
             <li>
-                <Link
-                    to="/"
-                    className="hover:bg-[#CD9003] font-cinzel font-bold"
-                >
-                    DASHBOARD
-                </Link>
-            </li>
-            <li>
-                <Link
+                <NavLink
                     to="/menu"
                     className="hover:bg-[#CD9003] font-cinzel font-bold"
                 >
                     OUR MENU
-                </Link>
+                </NavLink>
             </li>
             <li>
-                <Link
+                <NavLink
                     to="/shop"
                     className="hover:bg-[#CD9003] font-cinzel font-bold"
                 >
                     OUR SHOP
-                </Link>
+                </NavLink>
             </li>
         </>
     );
@@ -113,6 +106,9 @@ const Nav = () => {
                                                 ? user?.displayName
                                                 : user?.email}
                                         </p>
+                                    </li>
+                                    <li>
+                                        <Link to='/dashboard/home'>Dashboard</Link>
                                     </li>
                                     <li>
                                         <button

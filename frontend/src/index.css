@@ -1,7 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap");
 @import "tailwindcss";
 @plugin "daisyui";
 
 @theme {
-    --font-cinzel:"Cinzel", "sans-serif"
+    --font-cinzel: "Cinzel", "sans-serif";
+    --color-custom-purple:'#BB34F5';
+    --color-custom-pink:'#FCDBFF';
+    --color-bad:'#ab9';
 }
