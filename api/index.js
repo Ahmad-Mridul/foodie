@@ -24,6 +24,7 @@ async function run() {
         const menuCollection = client.db("foodieDB").collection("menus");
         const reviewsCollection = client.db("foodieDB").collection("reviews");
         const cartCollection = client.db("foodieDB").collection("cart");
+        const usersCollection = client.db("foodieDB").collection("users");
 
         // No "/api" here, Vercel adds it automatically
         app.get("/menus", async (req, res) => {
@@ -39,7 +40,6 @@ async function run() {
         // cart post
         app.get("/carts", async (req, res) => {
             const email = req.query.email;
-            console.log(email);
             const query = { email: email };
             let result = [];
             if (email) {
@@ -62,6 +62,11 @@ async function run() {
             res.send(result)
         })
 
+        app.post("/users", async(req,res)=>{
+            const data = req.body;
+            const result = await usersCollection.insertOne(data);
+            res.send(result);
+        })
 
 
         console.log("Connected to MongoDB");

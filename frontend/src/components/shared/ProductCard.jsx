@@ -10,6 +10,17 @@ const ProductCard = ({ category = null, recommended = false }) => {
     const [, refetch] = useCart();
     const navigate = useNavigate();
     const location = useLocation();
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        },
+    });
     const handleAddtoCart = (item) => {
         if (user && user?.email) {
             const cartItem = {
@@ -21,12 +32,9 @@ const ProductCard = ({ category = null, recommended = false }) => {
             };
             axios.post("http://localhost:3000/carts", cartItem).then((res) => {
                 if (res.data.insertedId) {
-                    Swal.fire({
-                        position: "top-end",
+                    Toast.fire({
                         icon: "success",
-                        title: "item has been added to the cart",
-                        showConfirmButton: false,
-                        timer: 1500,
+                        title: "added to cart successfully",
                     });
                     refetch();
                 }

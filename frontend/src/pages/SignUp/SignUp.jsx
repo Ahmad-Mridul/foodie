@@ -6,12 +6,20 @@ import useAuth from "../../context/useAuth";
 import { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import HelmetTitlle from "../../hooks/HelmetTitlle";
+import axios from "axios";
 const SignUp = () => {
     const [captchaValue, setCaptchaValue] = useState(null);
-    const { createUserWithGooglePopUp, setUser, createUserWithEmailPass } =
-        useAuth();
+    const {
+        createUserWithGooglePopUp,
+        setUser,
+        createUserWithEmailPass,
+        updateUserProfile,
+    } = useAuth();
     const [userInfo, setUserInfo] = useState({
         name: "",
+        age: "",
+        gender: "",
+        photoUrl: "",
         email: "",
         password: "",
     });
@@ -26,7 +34,6 @@ const SignUp = () => {
             .catch((err) => console.log(err.message));
     };
     const handleCaptchaChange = (value) => {
-        console.log("Captcha value:", value);
         setCaptchaValue(value);
     };
     const handleSignUp = (e) => {
@@ -35,11 +42,20 @@ const SignUp = () => {
             alert("Please complete the reCAPTCHA");
             return;
         }
-
-        // Continue submitting the form
-        console.log("Form submitted with captcha:", captchaValue);
         createUserWithEmailPass(userInfo.email, userInfo.password)
             .then((user) => {
+                updateUserProfile(userInfo.age,userInfo.gender,userInfo.photoUrl)
+                .then(()=>{
+                    const userData = {
+                        name:userInfo.name,
+                        age:userInfo.age,
+                        gender:userInfo.gender,
+                        photo:userInfo.photo,
+                        email:userInfo.email,
+                    }
+                    axios.post("http://localhost:3000/users",userData)
+                    .then(res=>console.log(res.data))
+                })
                 setUser(user.user);
                 navigate("/");
             })
@@ -52,7 +68,7 @@ const SignUp = () => {
                 className="flex justify-center items-center bg-cover bg-center p-10 "
                 style={{ backgroundImage: `url(${bg})` }}
             >
-                <div className="flex shadow-2xl w-full px-20 py-10">
+                <div className="flex items-center shadow-2xl w-full px-20 py-10">
                     <div className="w-1/2 order-2">
                         <img src={login} alt="" />
                     </div>
@@ -68,6 +84,7 @@ const SignUp = () => {
                                     <input
                                         placeholder="enter your name"
                                         name="name"
+                                        id="name"
                                         type="text"
                                         className="border w-full"
                                         required
@@ -76,6 +93,68 @@ const SignUp = () => {
                                             setUserInfo({
                                                 ...userInfo,
                                                 name: e.target.value,
+                                            })
+                                        }
+                                    />
+                                </div>
+                                <div className="flex w-full items-center justify-center gap-2">
+                                    <div className="w-1/2">
+                                        <label htmlFor="">Age*</label>
+                                        <br />
+                                        <input
+                                            placeholder="enter your name"
+                                            name="age"
+                                            type="number"
+                                            className="border w-full"
+                                            required
+                                            value={userInfo.age}
+                                            onChange={(e) =>
+                                                setUserInfo({
+                                                    ...userInfo,
+                                                    age: e.target.value,
+                                                })
+                                            }
+                                        />
+                                    </div>
+                                    <div className="w-1/2 space-y-2">
+                                        <label htmlFor="">Gender*</label>
+                                        <br />
+                                        <select
+                                            name="name"
+                                            className="border bg-white py-3 rounded border-gray-400 px-2 w-full"
+                                            required
+                                            value={userInfo.gender}
+                                            onChange={(e) =>
+                                                setUserInfo({
+                                                    ...userInfo,
+                                                    gender: e.target.value,
+                                                })
+                                            }
+                                        >
+                                            <option value="" selected>
+                                                Select your gender
+                                            </option>
+                                            <option value="male">Male</option>
+                                            <option value="female">
+                                                Female
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="">
+                                    <label htmlFor="">PhotoUrl*</label>
+                                    <br />
+                                    <input
+                                        placeholder="photo url"
+                                        name="name"
+                                        type="text"
+                                        className="border w-full"
+                                        required
+                                        value={userInfo.photoUrl}
+                                        onChange={(e) =>
+                                            setUserInfo({
+                                                ...userInfo,
+                                                photoUrl: e.target.value,
                                             })
                                         }
                                     />

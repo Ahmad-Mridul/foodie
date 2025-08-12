@@ -5,7 +5,6 @@ import { FaPaperPlane } from "react-icons/fa6";
 const ContactForm = () => {
     const [captchaValue, setCaptchaValue] = useState(null);
     const handleCaptchaChange = (value) => {
-        console.log("Captcha value:", value);
         setCaptchaValue(value);
     };
     const handleSubmit = (e) => {
@@ -14,9 +13,6 @@ const ContactForm = () => {
             alert("Please complete the reCAPTCHA");
             return;
         }
-
-        // Continue submitting the form
-        console.log("Form submitted with captcha:", captchaValue);
     };
     return (
         <div className="w-3/4 mx-auto">

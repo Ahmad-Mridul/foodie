@@ -8,6 +8,7 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     FacebookAuthProvider,
+    updateProfile,
 } from "firebase/auth";
 import auth from "../firebase/firebase.init";
 const AuthProvider = ({ children }) => {
@@ -33,6 +34,9 @@ const AuthProvider = ({ children }) => {
         setLoading(false);
         return signInWithPopup(auth, fbProvider);
     };
+    const updateUserProfile = (age,gender,photo) => {
+        return updateProfile(auth.currentUser,{photoURL:photo,gender:gender,age:age});
+    }
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -56,6 +60,7 @@ const AuthProvider = ({ children }) => {
         createUserWithEmailPass,
         signInUserEmailPass,
         signInWithFacebook,
+        updateUserProfile
     };
 
     return (

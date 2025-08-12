@@ -19,7 +19,6 @@ const Login = () => {
     const from = location?.state?.from?.pathname || "/";
     // eslint-disable-next-line no-unused-vars
     const handleCaptchaChange = (value) => {
-        console.log("Captcha value:", value);
         setCaptchaValue(value);
     };
     const navigate = useNavigate();
@@ -30,8 +29,6 @@ const Login = () => {
             return;
         }
 
-        // Continue submitting the form
-        console.log("Form submitted with captcha:", captchaValue);
         signInUserEmailPass(userInfo.email, userInfo.password);
         navigate(from, { replace: true });
     };
