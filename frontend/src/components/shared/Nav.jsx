@@ -88,7 +88,7 @@ const Nav = () => {
                 </ul>
                 <div className="space-x-2">
                     {user ? (
-                        <div className="space-x-2">
+                        <div className="space-x-2 flex items-center justify-center">
                             <Link to="/dashboard/cart" className="btn">
                                 <BsBagPlus />{" "}
                                 <div className="badge badge-sm badge-secondary">
@@ -96,8 +96,9 @@ const Nav = () => {
                                 </div>
                             </Link>
                             <details className="dropdown dropdown-end">
-                                <summary className="btn">
-                                    <FaCircleUser />
+                                <summary className="">
+                                    {/* <FaCircleUser /> */}
+                                    <img src={user?.photoURL} alt="" className="w-10 -mt-6 rounded hover:outline-2 hover:outline-yellow-400 cursor-pointer"/>
                                 </summary>
                                 <ul className="menu mt-2 dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
                                     <li>

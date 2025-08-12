@@ -57,6 +57,7 @@ const SignUp = () => {
         createUserWithEmailPass(userInfo.email, userInfo.password)
             .then((userCredential) => {
                 const currentUser = userCredential.user;
+                console.log(currentUser);                
                 updateUserProfile(userInfo.name, userInfo.photoUrl).then(() => {
                     const userData = {
                         age: userInfo.age,
