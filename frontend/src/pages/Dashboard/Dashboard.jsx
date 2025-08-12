@@ -4,7 +4,7 @@ import logo from "/odor.png";
 import { FaEdit, FaHome, FaMailBulk } from "react-icons/fa";
 import "./Dashboard.css";
 import { FaBowlFood, FaCartShopping, FaFileContract, FaPlus, FaShop, FaSpoon, FaUser } from "react-icons/fa6";
-const Dashoard = () => {
+const DashBoard = () => {
     return (
         <div className="">
             <Helmet>
@@ -12,7 +12,7 @@ const Dashoard = () => {
                 <title>FOODIE | Dashboard</title>
             </Helmet>
             <div className="flex">
-                <div className="w-70 p-5 h-screen bg-[#D1A054]">
+                <div className="w-[280px] p-5 h-screen bg-[#D1A054] fixed">
                     <div className="flex">
                         <img src={logo} alt="" className="w-8" />
                         <h2 className="text-white text-4xl font-bold font-cinzel">
@@ -87,12 +87,12 @@ const Dashoard = () => {
                         </nav>
                     </div>
                 </div>
-                <div className="flex-1 p-10">
-                    <Outlet />
+                <div className=" p-10 flex-1 ml-[280px]">
+                    <Outlet/>
                 </div>
             </div>
         </div>
     );
 };
 
-export default Dashoard;
+export default DashBoard;
