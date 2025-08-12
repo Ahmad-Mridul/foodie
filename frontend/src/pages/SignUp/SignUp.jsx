@@ -7,6 +7,7 @@ import { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import HelmetTitlle from "../../hooks/HelmetTitlle";
 import axios from "axios";
+import Swal from "sweetalert2";
 const SignUp = () => {
     const [captchaValue, setCaptchaValue] = useState(null);
     const {
@@ -24,6 +25,17 @@ const SignUp = () => {
         password: "",
     });
     const navigate = useNavigate();
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        },
+    });
     const handleGoogleSignUp = () => {
         createUserWithGooglePopUp()
             .then((user) => {
@@ -43,20 +55,29 @@ const SignUp = () => {
             return;
         }
         createUserWithEmailPass(userInfo.email, userInfo.password)
-            .then((user) => {
-                updateUserProfile(userInfo.age,userInfo.gender,userInfo.photoUrl)
-                .then(()=>{
+            .then((userCredential) => {
+                const currentUser = userCredential.user;
+                updateUserProfile(userInfo.name, userInfo.photoUrl).then(() => {
                     const userData = {
-                        name:userInfo.name,
-                        age:userInfo.age,
-                        gender:userInfo.gender,
-                        photo:userInfo.photo,
-                        email:userInfo.email,
-                    }
-                    axios.post("http://localhost:3000/users",userData)
-                    .then(res=>console.log(res.data))
-                })
-                setUser(user.user);
+                        age: userInfo.age,
+                        gender: userInfo.gender,
+                        email: userInfo.email,
+                    };
+                    axios
+                        .post("http://localhost:3000/users", userData)
+                        // eslint-disable-next-line no-unused-vars
+                        .then((res) => {})
+                        .catch((err) => console.log(err));
+                });
+                setUser({
+                    ...currentUser,
+                    displayName: userInfo.name,
+                    photoUrl: userInfo.photoUrl,
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "Signed in successfully",
+                });
                 navigate("/");
             })
             .catch((err) => console.log(err.message));

@@ -34,9 +34,13 @@ const AuthProvider = ({ children }) => {
         setLoading(false);
         return signInWithPopup(auth, fbProvider);
     };
-    const updateUserProfile = (age,gender,photo) => {
-        return updateProfile(auth.currentUser,{photoURL:photo,gender:gender,age:age});
-    }
+    const updateUserProfile = (name, photo) => {
+        return updateProfile(auth.currentUser, {
+            displayName: name,
+            photoURL: photo,
+        });
+    };
+
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -60,7 +64,7 @@ const AuthProvider = ({ children }) => {
         createUserWithEmailPass,
         signInUserEmailPass,
         signInWithFacebook,
-        updateUserProfile
+        updateUserProfile,
     };
 
     return (
