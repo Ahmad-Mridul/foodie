@@ -1,16 +1,34 @@
-import React from "react";
+import React, { Suspense } from "react";
 import useAuth from "../context/useAuth";
 import { Navigate, useLocation } from "react-router-dom";
 
 const PrivateRoute = ({ children }) => {
     const { user, loading } = useAuth();
     const location = useLocation();
+
     if (loading) {
-        return <span className="loading loading-bars loading-xl"></span>;
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <span className="loading loading-bars loading-xl"></span>
+            </div>
+        );
     }
-    if (user) {
-        return children;
+
+    if (!user) {
+        return <Navigate to="/login" state={{ from: location }} replace />;
     }
-    return <Navigate to="/login" state={{from:location}} replace></Navigate>;
+
+    return (
+        <Suspense
+            fallback={
+                <div className="flex justify-center items-center h-screen">
+                    <span className="loading loading-bars loading-xl"></span>
+                </div>
+            }
+        >
+            {children}
+        </Suspense>
+    );
 };
+
 export default PrivateRoute;
