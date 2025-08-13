@@ -6,12 +6,30 @@ import useUsers from "../../../hooks/useUsers";
 const AllUsers = () => {
     const [users, refetch] = useUsers();
     const handleRoleChange = async (_id, newRole) => {
-        await axios
-            .patch(`http://localhost:3000/users/${_id}`, { role: newRole })
-            .then((res) => {
-                console.log(res.data);
-            });
-        refetch();
+        Swal.fire({
+            title: "Are you sure?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: `Yes, make ${newRole}!`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios
+                    .patch(`http://localhost:3000/users/${_id}`, {
+                        role: newRole,
+                    })
+                    .then((res) => {
+                        console.log(res.data);
+                    });
+                Swal.fire({
+                    title: "Changed!",
+                    text: "User role has been changed successfully.",
+                    icon: "success",
+                });
+                refetch();
+            }
+        });
     };
     const handleDeleteUser = (_id) => {
         Swal.fire({

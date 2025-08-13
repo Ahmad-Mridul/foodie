@@ -42,6 +42,7 @@ const SignUp = () => {
             .then((userCredential) => {
                 alert("user created succesfully");
                 const newUser = userCredential.user;
+                setUser(newUser);
                 const userInfo = {
                     displayName: newUser.displayName,
                     email: newUser.email,
@@ -51,7 +52,6 @@ const SignUp = () => {
                 axios
                     .post("http://localhost:3000/users", userInfo)
                     .then((res) => console.log(res.data));
-                setUser(newUser);
                 navigate("/");
             })
             .catch((err) => console.log(err.message));

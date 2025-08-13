@@ -3,9 +3,19 @@ import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../context/useAuth";
 import { BsBagPlus } from "react-icons/bs";
 import useCart from "../../hooks/useCart";
-import "./nav.css"
+import "./nav.css";
+import { useState } from "react";
+import { useEffect } from "react";
+import { FaUser } from "react-icons/fa";
 const Nav = () => {
     const { user, userSignOut } = useAuth();
+    const [photoUrl, setPhotoUrl] = useState("");
+
+    useEffect(() => {
+        if (user) {
+            setPhotoUrl(user.photoURL); // immediately update local state
+        }
+    }, [user]);
     const [cart] = useCart();
     const links = (
         <>
@@ -98,7 +108,11 @@ const Nav = () => {
                             <details className="dropdown dropdown-end">
                                 <summary className="">
                                     {/* <FaCircleUser /> */}
-                                    <img src={user?.photoURL} alt="" className="w-10 -mt-6 rounded hover:outline-2 hover:outline-yellow-400 cursor-pointer"/>
+                                    <img
+                                        src={photoUrl || <FaUser/>}
+                                        alt=""
+                                        className="w-10 -mt-6 rounded hover:outline-2 hover:outline-yellow-400 cursor-pointer"
+                                    />
                                 </summary>
                                 <ul className="menu mt-2 dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
                                     <li>
@@ -109,7 +123,9 @@ const Nav = () => {
                                         </p>
                                     </li>
                                     <li>
-                                        <Link to='/dashboard/home'>Dashboard</Link>
+                                        <Link to="/dashboard/home">
+                                            Dashboard
+                                        </Link>
                                     </li>
                                     <li>
                                         <button

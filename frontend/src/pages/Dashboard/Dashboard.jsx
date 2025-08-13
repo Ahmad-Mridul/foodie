@@ -10,9 +10,14 @@ import {
     FaSpoon,
     FaUser,
 } from "react-icons/fa6";
+import useAuth from "../../context/useAuth";
+import useUsers from "../../hooks/useUsers";
 const DashBoard = () => {
-    const isAdmin = true;
-    
+    const { user } = useAuth();
+    const [users] = useUsers();
+    const loggedUser = users.find((u) => u.email === user.email);
+    console.log(loggedUser);
+
     return (
         <div className="">
             <Helmet>
@@ -30,42 +35,82 @@ const DashBoard = () => {
                     <div className="pt-10">
                         <nav>
                             <ul className="menu space-y-2">
-                                <li>
-                                    <NavLink to="/dashboard/home">
-                                        <FaHome />
-                                        Admin Home
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="/dashboard/cart">
-                                        <FaCartShopping />
-                                        Cart Items
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="/dashboard/add-item">
-                                        <FaPlus />
-                                        Add Items
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="/dashboard/manage-items">
-                                        <FaEdit />
-                                        Manage Items
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="/dashboard/manage-bookings">
-                                        <FaEdit />
-                                        Manage Bookings
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="/dashboard/all-users">
-                                        <FaUser />
-                                        All Users
-                                    </NavLink>
-                                </li>
+                                {loggedUser?.role === "admin" ? (
+                                    <>
+                                        <li>
+                                            <NavLink to="/dashboard/home">
+                                                <FaHome />
+                                                Admin Home
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/dashboard/add-item">
+                                                <FaPlus />
+                                                Add Items
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/dashboard/manage-items">
+                                                <FaEdit />
+                                                Manage Items
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/dashboard/manage-bookings">
+                                                <FaEdit />
+                                                Manage Bookings
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/dashboard/all-users">
+                                                <FaUser />
+                                                All Users
+                                            </NavLink>
+                                        </li>
+                                    </>
+                                ) : (
+                                    <>
+                                        <li>
+                                            <NavLink to="/dashboard/cart">
+                                                <FaCartShopping />
+                                                User Home
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/dashboard/cart">
+                                                <FaCartShopping />
+                                                Reservation
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/dashboard/cart">
+                                                <FaCartShopping />
+                                                Payment History
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/dashboard/cart">
+                                                <FaCartShopping />
+                                                My Cart
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/dashboard/add-item">
+                                                <FaPlus />
+                                                Add Review
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/dashboard/manage-items">
+                                                <FaEdit />
+                                                My Booking
+                                            </NavLink>
+                                        </li>
+                                    </>
+                                )}
+
+                                {/* user */}
+
                                 <hr />
                                 <li>
                                     <NavLink to="/">
