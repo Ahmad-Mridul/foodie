@@ -7,6 +7,7 @@ import useAuth from "../../context/useAuth";
 import { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import HelmetTitlle from "../../hooks/HelmetTitlle";
+import axios from "axios";
 const Login = () => {
     const [captchaValue, setCaptchaValue] = useState(null);
     const { signInUserEmailPass, createUserWithGooglePopUp, setUser } =
@@ -35,6 +36,15 @@ const Login = () => {
     const handleGoogleLogin = () => {
         createUserWithGooglePopUp()
             .then((user) => {
+                const userInfo = {
+                    email:user.user.email,
+                    name:user.user.displayName
+                }
+                axios.post("http://localhost:3000/users",userInfo)
+                .then(result=>{
+                    console.log(result.data);
+                    navigate('/');
+                })
                 setUser(user.user);
                 navigate(from, { replace: true });
             })

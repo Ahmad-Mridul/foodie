@@ -55,19 +55,31 @@ async function run() {
             res.send(result);
         });
 
-        app.delete("/carts/:id",async(req,res)=>{
+        app.delete("/carts/:id", async (req, res) => {
             const id = req.params.id;
-            const query = {_id: new ObjectId(id)};
+            const query = { _id: new ObjectId(id) };
             const result = await cartCollection.deleteOne(query);
-            res.send(result)
-        })
-
-        app.post("/users", async(req,res)=>{
-            const data = req.body;
-            const result = await usersCollection.insertOne(data);
             res.send(result);
-        })
+        });
 
+        // users api
+
+        app.get("/users", async (req, res) => {
+            const result = await usersCollection.find().toArray();
+            res.send(result);
+        });
+
+        app.post("/users", async (req, res) => {
+            const user = req.body;
+            const email = user.email;
+            const query = { email: email };
+            const existingUser = await usersCollection.findOne(query);
+            if (existingUser) {
+                return res.send({ message: "user already exists" });
+            }
+            const result = await usersCollection.insertOne(user);
+            res.send(result);
+        });
 
         console.log("Connected to MongoDB");
     } catch (error) {
