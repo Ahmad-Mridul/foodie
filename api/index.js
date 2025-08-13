@@ -69,6 +69,19 @@ async function run() {
             res.send(result);
         });
 
+        app.patch("/users/:id", async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const { role } = req.body;
+            const updateDoc = {
+                $set: {
+                    role: role,
+                },
+            };
+            const result = await usersCollection.updateOne(query, updateDoc);
+            res.send(result);
+        });
+
         app.post("/users", async (req, res) => {
             const user = req.body;
             const email = user.email;
@@ -78,6 +91,13 @@ async function run() {
                 return res.send({ message: "user already exists" });
             }
             const result = await usersCollection.insertOne(user);
+            res.send(result);
+        });
+
+        app.delete("/users/:id", async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await usersCollection.deleteOne(query);
             res.send(result);
         });
 

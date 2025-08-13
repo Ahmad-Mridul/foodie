@@ -13,6 +13,7 @@ const SignUp = () => {
     const {
         createUserWithGooglePopUp,
         setUser,
+        user,
         createUserWithEmailPass,
         updateUserProfile,
     } = useAuth();
@@ -38,9 +39,19 @@ const SignUp = () => {
     });
     const handleGoogleSignUp = () => {
         createUserWithGooglePopUp()
-            .then((user) => {
+            .then((userCredential) => {
                 alert("user created succesfully");
-                setUser(user.user);
+                const newUser = userCredential.user;
+                const userInfo = {
+                    displayName: newUser.displayName,
+                    email: newUser.email,
+                    photoUrl: newUser.photoURL || "",
+                    role: "user",
+                };
+                axios
+                    .post("http://localhost:3000/users", userInfo)
+                    .then((res) => console.log(res.data));
+                setUser(newUser);
                 navigate("/");
             })
             .catch((err) => console.log(err.message));
@@ -57,12 +68,17 @@ const SignUp = () => {
         createUserWithEmailPass(userInfo.email, userInfo.password)
             .then((userCredential) => {
                 const currentUser = userCredential.user;
-                console.log(currentUser);                
+                console.log(currentUser);
                 updateUserProfile(userInfo.name, userInfo.photoUrl).then(() => {
                     const userData = {
                         age: userInfo.age,
                         gender: userInfo.gender,
                         email: userInfo.email,
+                        displayName: userInfo.name,
+                        photoUrl: userInfo?.photoUrl
+                            ? userInfo.photoUrl
+                            : user?.photoUrl,
+                        role: "user",
                     };
                     axios
                         .post("http://localhost:3000/users", userData)

@@ -3,8 +3,16 @@ import { Helmet } from "react-helmet";
 import logo from "/odor.png";
 import { FaEdit, FaHome, FaMailBulk } from "react-icons/fa";
 import "./Dashboard.css";
-import { FaBowlFood, FaCartShopping, FaFileContract, FaPlus, FaShop, FaSpoon, FaUser } from "react-icons/fa6";
+import {
+    FaCartShopping,
+    FaPlus,
+    FaShop,
+    FaSpoon,
+    FaUser,
+} from "react-icons/fa6";
 const DashBoard = () => {
+    const isAdmin = true;
+    
     return (
         <div className="">
             <Helmet>
@@ -36,13 +44,13 @@ const DashBoard = () => {
                                 </li>
                                 <li>
                                     <NavLink to="/dashboard/add-item">
-                                        <FaPlus/>
+                                        <FaPlus />
                                         Add Items
                                     </NavLink>
                                 </li>
                                 <li>
                                     <NavLink to="/dashboard/manage-items">
-                                        <FaEdit  />
+                                        <FaEdit />
                                         Manage Items
                                     </NavLink>
                                 </li>
@@ -88,7 +96,7 @@ const DashBoard = () => {
                     </div>
                 </div>
                 <div className=" p-10 flex-1 ml-[280px]">
-                    <Outlet/>
+                    <Outlet />
                 </div>
             </div>
         </div>
