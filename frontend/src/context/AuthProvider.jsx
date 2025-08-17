@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { AuthContext } from "./useAuth";
+import axios from "axios";
 import {
     signInWithPopup,
     GoogleAuthProvider,
@@ -46,9 +47,21 @@ const AuthProvider = ({ children }) => {
             if (user) {
                 setUser(user); // handles reloads
                 setLoading(false);
+                const userInfo = { email: user.email };
+                axios
+                    .post("http://localhost:3000/jwt", userInfo)
+                    .then((res) => {
+                        if (res.data.token) {
+                            localStorage.setItem(
+                                "access-token",
+                                res.data.token
+                            );
+                        }
+                    });
             } else {
                 setUser(null);
                 setLoading(false);
+                localStorage.removeItem("access-token");
             }
         });
         return () => unSubscribe();

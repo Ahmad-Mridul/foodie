@@ -1,5 +1,5 @@
 const express = require("express");
-const serverless = require("serverless-http");
+var jwt = require("jsonwebtoken");
 const cors = require("cors");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 require("dotenv").config();
@@ -62,9 +62,32 @@ async function run() {
             res.send(result);
         });
 
+        const verifyToken = async (req, res, next) => {
+            console.log("inside veirfy, bearer: ", req.headers.authorization);
+            const auth = await req.headers.authorization;
+            if (!auth) {
+                return res.status(401).send({ message: "Forbidden access" });
+            }
+            const token = auth.split(" ")[1];
+            jwt.verify(
+                token,
+                process.env.ACCESS_TOKEN_SECRET,
+                (err, decoded) => {
+                    if (err) {
+                        return res
+                            .status(401)
+                            .send({ message: "Forbidden access" });
+                    }
+                    req.decoded = decoded;
+                    next();
+                }
+            );
+        };
+
         // users api
 
-        app.get("/users", async (req, res) => {
+        app.get("/users", verifyToken, async (req, res) => {
+            console.log(req.headers);
             const result = await usersCollection.find().toArray();
             res.send(result);
         });
@@ -99,6 +122,15 @@ async function run() {
             const query = { _id: new ObjectId(id) };
             const result = await usersCollection.deleteOne(query);
             res.send(result);
+        });
+
+        // jwt api
+        app.post("/jwt", async (req, res) => {
+            const user = req.body;
+            const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+                expiresIn: "1hr",
+            });
+            res.send({ token });
         });
 
         console.log("Connected to MongoDB");

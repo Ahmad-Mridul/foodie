@@ -16,7 +16,6 @@ const DashBoard = () => {
     const { user } = useAuth();
     const [users] = useUsers();
     const loggedUser = users.find((u) => u.email === user.email);
-    console.log(loggedUser);
 
     return (
         <div className="">
